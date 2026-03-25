@@ -1,0 +1,23 @@
+# CORS Security Test Results
+# Date: March 24, 2026
+# Finding: F-02
+
+=== Test: Malicious origin reflection ===
+curl -sI -H "Origin: https://evil-attacker.com" https://jsonplaceholder.typicode.com/posts
+
+Response headers:
+→ access-control-allow-origin: https://evil-attacker.com  ← ORIGIN REFLECTED
+→ access-control-allow-credentials: true                  ← CREDENTIALS ENABLED
+
+RESULT: FAIL — Server reflects any arbitrary Origin header verbatim.
+Combined with credentials: true, this allows any website to make
+credentialed cross-origin API requests on behalf of authenticated users.
+
+=== Expected secure behaviour ===
+→ access-control-allow-origin: https://yourdomain.com (specific allowlist)
+→ OR: access-control-allow-origin: * (wildcard WITHOUT credentials)
+→ NEVER: reflected origin + credentials: true combined
+
+=== Risk ===
+An attacker at https://evil-attacker.com can silently read
+API responses including authenticated user data.
