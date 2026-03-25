@@ -1,0 +1,24 @@
+# Unauthenticated Access Test Results
+# Date: March 24, 2026
+# Finding: F-01, F-03
+
+=== READ without auth ===
+curl -s https://jsonplaceholder.typicode.com/users/1
+→ HTTP 200 — Full user PII returned (name, email, phone, address, GPS)
+
+=== POST without auth ===
+curl -X POST https://jsonplaceholder.typicode.com/posts \
+  -H "Content-Type: application/json" \
+  -d '{"title":"Test","body":"Content","userId":1}'
+→ HTTP 201 — {"title":"Test","body":"Content","userId":1,"id":101}
+
+=== DELETE without auth ===
+curl -X DELETE https://jsonplaceholder.typicode.com/posts/1
+→ HTTP 200 — {} (resource accepted as deleted)
+
+=== Invalid token test ===
+curl -sI https://jsonplaceholder.typicode.com/posts \
+  -H "Authorization: Bearer INVALID_TOKEN_XYZ"
+→ HTTP 200 — Accepted, no auth check performed
+
+CONCLUSION: Zero authentication on all endpoints. Any caller regardless of credentials (or lack thereof) gets full access.
