@@ -1,0 +1,28 @@
+# Raw HTTP Response Headers — jsonplaceholder.typicode.com
+# Captured: March 24, 2026
+# Command: curl -sI https://jsonplaceholder.typicode.com/posts
+# Method: Passive read-only inspection
+
+HTTP/2 200
+date: Tue, 24 Mar 2026 17:39:22 GMT
+content-type: application/json; charset=utf-8
+access-control-allow-credentials: true
+cache-control: max-age=43200
+etag: W/"6b80-Ybsq/K6GwwqrYkAsFxqDXGC7DoM"
+expires: -1
+nel: {"report_to":"heroku-nel","max_age":3600}
+server: cloudflare
+vary: Origin, Accept-Encoding
+via: 2.0 heroku-router
+x-content-type-options: nosniff
+x-powered-by: Express
+x-ratelimit-limit: 1000
+x-ratelimit-remaining: 999
+x-ratelimit-reset: 1773655426
+cf-cache-status: HIT
+cf-ray: 9e177470af1ad28d-FRA
+alt-svc: h3=":443"; ma=86400
+
+# PRESENT:  x-content-type-options | x-ratelimit-limit | server: cloudflare | HTTP/2
+# MISSING:  Content-Security-Policy | Strict-Transport-Security | X-Frame-Options | Referrer-Policy | Permissions-Policy
+# RISK:     access-control-allow-credentials: true (combined with reflected origin = HIGH risk)
